@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>系统提示</title>
+</head>
+<body>
+    <div>
+        <?= isset($message)? $message : '成功';?>
+        页面正在跳转，点击<a href="<?= $url?>">此处</a>跳转
+        <script>
+            window.onload = function(){
+                var $time = document.querySelector('#time');
+                $time.innerText = '3S';
+                var time =3;
+                var t = setInterval(function(){
+                    time--;
+                    if(time==-1){
+                        clearInterval(t);
+                        location.href = "<?= $url?>";
+                    }else{
+                        $time.innerText = time +'S';
+                    }
+                },1000);
+            }
+        </script>
+    </div>
+</body>
+<html>

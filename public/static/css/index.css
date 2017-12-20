@@ -1,0 +1,114 @@
+body{
+    background: lightpink;
+}
+a,li,ol,ul{
+    text-decoration: none;
+}
+.top{
+    width: 1000px;
+    height: 200px;
+    background: lightpink;
+}
+.layui-tab{
+    width:1000px;
+    height:80%;
+    background: pink;
+    position:relative;
+}
+
+.logo{
+    float: left;
+    margin-top: 30px;
+    width: 500px;
+    height:170px;
+}
+.button{
+    padding: 5px;
+    float: right;
+    color: white;
+    margin-top: 70px;
+    margin-right: 30px;
+    background: pink;
+    border: 1px honeydew solid;
+    border-radius: 4px;
+    font-family: 黑体;
+    font-size: 25px;
+}
+
+.joke-content{
+    width:98%;
+    height:85%;
+    margin:auto;
+    position:absolute;
+    left: 20px;;
+    top:80px;
+    margin-left: -10px;
+    margin-top:-10px;
+    background-color: pink;
+}
+
+.joke{
+    margin-top: 1px;
+    background: whitesmoke;
+    padding: 60px;
+}
+
+.joke .joke-top{
+    width: 100%;
+    height: 60px;
+    border-radius: 4px;
+
+}
+.joke .uname{
+    font-family: 华文行楷;
+    font-size: 25px;
+    float: left;
+    margin-left: 5px;
+}
+.joke .add-time{
+    font-family: 黑体;margin-top: 8px;
+    font-size: 15px;
+}
+.joke .image{
+    float: left;
+    margin-left: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+}
+.top .joke .image{
+    float: right;
+    margin-left: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
+}
+.joke .stage{
+    margin-top: 5px;
+    text-indent: 2em;
+    letter-spacing:5px;
+    margin-left: 20px;
+    line-height: 30px;
+    font-size: 20px;
+}
+.joke .assess{
+    margin-left: 30px;
+    margin-top: 15px;
+}
+.joke .praise{
+
+}
+.joke .number{
+    font-size: 25px;
+}
+.joke .praise .layui-icon{
+    color: #ffc0cb;
+    font-size: 25px;
+}
+.praise-box{
+    margin-left: 20px;
+    float: left;
+}
+.praise{
+    cursor:pointer
+}

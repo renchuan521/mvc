@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link href="./public/static/css/index.css" rel="stylesheet" type="text/css"/>
+    <link href="./public/static/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="./public/static/css/login-register.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="./public/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="./public/static/css/demo.css"  media="all">
+    <script src="./public/static/js/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="./public/static/js/bootstrap.js" type="text/javascript"></script>
+    <script src="./public/static/js/login-register.js" type="text/javascript"></script>
+</head>
+<body>
+<center>
+
+    <div class="container">
+        <div class="modal fade login" id="loginModal">
+            <div class="modal-dialog login animated">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="box">
+                            <div class="content">
+                                <div class="division">
+                                    <div class="line l"></div>
+                                    <span>or</span>
+                                    <div class="line r"></div>
+                                </div>
+                                <div class="error"></div>
+                                <div class="form loginBox">
+                                    <form class="login-form" accept-charset="UTF-8">
+                                        <input  class="form-control" type="text" placeholder="Username" name="username">
+                                        <input class="form-control" type="password" placeholder="Password" name="password">
+                                        <input class="btn btn-default btn-login" type="button" value="登陆" onclick="loginAjax()">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="content registerBox" style="display:none;">
+                                <div class="form">
+                                    <form class="register-form" accept-charset="UTF-8">
+                                        <input  class="form-control" type="text" placeholder="Username" name="username">
+                                        <input class="form-control" type="password" placeholder="Password" name="password">
+                                        <input  class="form-control" type="text" placeholder="Nickname" name="nickname">
+                                        <input class="btn btn-default btn-register" type="button" value="创建账户" name="commit" onclick="registerAjax()">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="forgot login-footer">
+                            <span>没有?
+                                 <a href="javascript: showRegisterForm();">创建一个账户</a>
+                            </span>
+                        </div>
+                        <div class="forgot register-footer" style="display:none">
+                            <span>已有账户?</span>
+                            <a href="javascript: showLoginForm();">登陆</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        <div class="top">
+            <img class="logo" src="./public/static/images/logo1.jpg" />
+            <ul class="layui-nav layui-layout">
+                <?php if(isset($user['u_id'])){?>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="<?= $user['img']?>" class="layui-nav-img"><?= $user['nickname']?>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd style="height: 40px;line-height: 40px;"><a href="?r=user/info">基本资料</a></dd>
+                        <dd style="height: 40px;line-height: 40px;"><a href="?r=user/person">个人中心</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:void(0);"  onclick="logout();">退了</a>
+                </li>
+                <?php }else{?>
+                <li class="layui-nav-item">
+                    <a  class="layui-btn layui-btn-warm" data-toggle="modal" href="javascript:void(0)" onclick="openLoginModal();">&nbsp;登录&nbsp;</a>
+                </li>
+                <?php }?>
+            </ul>
+
+            <a class="button" data-method="confirmTrans" href="javascript:void(0);" onclick="insert()"> &nbsp;我要投稿&nbsp; </a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+        </div>
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li class="layui-this">你的发布</li>
+                <?php if(isset($user['u_id'])){?>
+                <li class="edit">编辑栏</li>
+                <?php }?>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="bottom">
+                        <div class="joke-content flow-default" id="LAY_demo1">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item content-edit">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">类别</label>
+                            <div class="layui-input-block">
+                                <select name="art_type" lay-filter="aihao">
+                                    <option value=""></option>
+                                    <option value="视频">视频</option>
+                                    <option value="段子" selected="">段子</option>
+                                    <option value="图片">图片</option>
+                                    <option value="心灵砒霜">心灵砒霜</option>
+                                    <option value="晒一晒">晒一晒</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">内容</label>
+                            <div class="layui-input-block">
+                                <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="button" class="layui-btn" lay-submit="" lay-filter="demo1" value="立即提交">
+                                <input type="reset" class="layui-btn layui-btn-primary" value="重置">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</center>
+<script src="./public/static/layui/layui.js" charset="utf-8"></script>
+<script>
+    var uid = "<?= isset($user['u_id'])?$user['u_id']:''?>";
+    window.onload= function () {
+        $(".joke-content").on('click','.praise',function(){
+            if(!uid){
+                layer.msg('游客不可以点赞哦！!',{icon:2,time:1000});
+            }
+            var obj = $(this);
+            var is_=obj.data('is_');
+            if(is_==1){
+                layer.msg('<i class="layui-icon" style="color: red;font-size: 50px;"><b>&#xe69c;</b></i><br>你已经赞过了！', {
+                    time: 20000, //20s后自动关闭
+                    btn: ['明白了', '知道了']
+                });
+                return false;
+            }
+            var flog=0;
+            var id=$(this).parents('.assess').data('id');
+            var val=$(this).data('val');
+            $.ajax({
+                type: 'get',
+                url: "?r=index/praise",
+                data : {id:id,val:val},
+                success: function(result){
+                    if(result.code==200){
+                        if(val=='+'){
+                            var $url='./public/static/images/yizan.png';
+                        }else{
+                            var $url='./public/static/images/yicai.png';
+                        }
+                        var praise_txt = obj.next();
+                        var num=parseInt(praise_txt.text());
+                        obj.children().attr('src',$url);
+                        praise_txt.addClass("hover");
+                        obj.data('is_',1);
+                        num =parseInt(num+1);
+                        praise_txt.text(num)
+                    }
+                    if(result.code==1){
+                        layer.msg('<i class="layui-icon" style="color: red;font-size: 50px;"><b>&#xe69c;</b></i><br>'+result.msg+'！', {
+                            time: 20000, //20s后自动关闭
+                            btn: ['明白了', '知道了']
+                        });
+                        return false;
+                    }
+                    if(result.code==0){
+                        layer.msg('<i class="layui-icon" style="color: red;font-size: 50px;"><b>&#xe69c;</b></i><br>抱歉，系统故障！', {
+                            time: 20000, //20s后自动关闭
+                            btn: ['明白了', '知道了']
+                        });
+                        return false;
+                    }
+
+                }
+            });
+
+        });
+    };
+    layui.use(['form','flow','element', 'layedit'], function(){
+        var form = layui.form
+                ,layer = layui.layer
+                ,layedit = layui.layedit
+                ,$ = layui.jquery
+                ,element = layui.element
+                ,flow = layui.flow;
+
+        flow.load({
+            elem: '#LAY_demo1' //流加载容器
+            ,scrollElem: '#LAY_demo1'
+            ,done: function(page, next){ //执行下一页的回调
+                console.log(next);
+                setTimeout(function(){
+                    var lis = [];
+                    $.ajax({
+                        type: 'get',
+                        url: "?r=user/person",
+                        data: {page:page},
+                        dataType: 'json',
+                        success: function(result){
+                            if(result.code==200){
+                                $.each(result.data, function (k, v) {
+                                    lis.push('<div class="joke"  align="left">\
+                                            <div class="joke-top">\
+                                            <img class="image" src="'+ v.img+'">\
+                                            <div class="message">\
+                                            <span class="uname">\
+                                    <span>'+v.nickname+'<br>\
+                                    <font class="add-time">'+ v.add_time+'</font>\
+                                    </span><br>\
+                                    </span>\
+                                    </div>\
+                                    </div>\
+                                    <div class="stage">\
+                                    <p>'+ v.content+'</p>\
+                                    </div>\
+                                    <div class="assess" data-id="'+ v.id+'">\
+                                            <div class="praise-box">\
+                                            <span class="praise" data-val="+" data-is_=""><img src="./public/static/images/zan.png" class="praise-img" /></span>\
+                                            <span class="praise-txt">'+v.upnums+'</span>\
+                                    </div>\
+                                    <div class="praise-box">\
+                                            <span class="praise" data-val="-" data-is_=""><img src="./public/static/images/cai.png" class="praise-img" /></span>\
+                                            <span class="praise-txt">'+v.downnums+'</span>\
+                                    </div>\
+                                    </div>\
+                                    </div>')
+                                });
+                                next(lis.join(''), page <=result.page_num);
+                            }else{
+                                layer.msg('加载失败了!',{icon:2,time:1000});
+                            }
+                        }
+                    });
+                }, 500);
+            }
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor',{tool: [
+            'strong' //加粗
+            ,'italic' //斜体
+            ,'underline' //下划线
+            ,'del' //删除线
+            ,'|' //分割线
+            ,'left' //左对齐
+            ,'center' //居中对齐
+            ,'right' //右对齐
+            ,'link' //超链接
+            ,'unlink' //清除链接
+            ,'face' //表情
+//            ,'image' //插入图片
+            ,'help' //帮助
+        ]});
+
+        //自定义验证规则
+        form.verify({
+            content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+
+
+
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            $.ajax({
+                type: 'post',
+                url: "?r=index/save",
+                data: data.field,
+                dataType: 'json',
+                success: function(result){
+                    if(result.code==200){
+                        layer.msg('添加成功!',{icon:1,time:1000});
+                        window.location.href='?r=user/person';
+                    }else{
+                        layer.msg('添加失败!',{icon:2,time:1000});
+                    }
+                }
+            });
+            return false;
+
+        });
+
+    });
+</script>
+</body>
+</html>
+
