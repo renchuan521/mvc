@@ -2,9 +2,9 @@
 
 return [
     'db'=>[
-        'host' => 'rm-uf652a57e1pa150bpo.mysql.rds.aliyuncs.com',
+        'host' => 'localhost',
         'user'=>'root',
-        'password'=>'123+++ao',
+        'password'=>'',
         'dbname'=>'mvc',
         'port'=>3306,
         'prefix'=>'',
