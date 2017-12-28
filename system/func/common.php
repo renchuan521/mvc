@@ -10,6 +10,7 @@ function M($name){
     return libs\BaseTree::get($objname);
 }
 
+
 function U($url,$params=[]){
     $url_mode = C('url_mode');
     $controller = '';

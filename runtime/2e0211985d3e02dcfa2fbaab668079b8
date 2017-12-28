@@ -164,7 +164,7 @@
 
     </div>
 </center>
-<script src='/public/static/js/index.js'></script>
+<script src='/MVC/public/static/js/index.js'></script>
 <script src="<?= __ROOT__ ?>/public/static/layui/layui.js" charset="utf-8"></script>
 <script>
     var uid = "<?= isset($user['u_id'])?$user['u_id']:''?>";

@@ -10,7 +10,6 @@ class Controller
         if(method_exists($this,'init')){
             $this->init();
         }
-
         $this->view = new View();
     }
 

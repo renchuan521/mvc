@@ -9,6 +9,7 @@ class Cache
 {
     public $storageName;
     public $storage;
+
     public $name;
 
     public function __construct($storageName)

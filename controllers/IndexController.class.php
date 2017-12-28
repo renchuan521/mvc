@@ -6,6 +6,7 @@ use libs\Controller;
 use libs\Configure;
 use libs\Response;
 use models\ArticleModel;
+use models\UserModel;
 use libs\Cache;
 use libs\Session;
 
@@ -31,7 +32,7 @@ class IndexController extends Controller
         $article = M('ArticleModel');
         $nums = $article->field('count(*) as nums')->join(['user', 'article.user_id', 'user.u_id'])->select();
         $article = M('ArticleModel');
-        $data = $article->join(['user', 'article.user_id', 'user.u_id'])->orderBy('add_time desc')->limit($limit,5)->select();
+        $data = $article->field('*')->join(['user', 'article.user_id', 'user.u_id'])->orderBy('add_time desc')->limit($limit,5)->select();
         $page_nums = $nums[0]['nums'];
         $page_num = floor($page_nums/5);
         if(IS_AJAX){
